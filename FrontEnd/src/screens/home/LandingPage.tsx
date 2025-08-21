@@ -625,7 +625,7 @@ export default function LandingPage() {
           </nav>
         </div>
         <div className="mt-8 text-center text-gray-500">
-          <p>made with <span className="animate-pulse">❤️</span> by Phani Bhusan</p>
+          <p>made with <span className="animate-pulse">❤️</span> by Sujay Rana</p>
         </div>
       </footer>
     </div>
