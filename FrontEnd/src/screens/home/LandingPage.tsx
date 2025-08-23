@@ -511,7 +511,7 @@ export default function LandingPage() {
                 />
                 <StatCard
                   icon={UserPlusIcon}
-                  value={600}
+                  value={800}
                   label="Registered Users"
                 />
                 <StatCard
