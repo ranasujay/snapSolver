@@ -386,14 +386,39 @@ export default function Home() {
 
   return (
     <>
-      {/* Back Button */}
-      <Link 
-        to="/" 
-        className="fixed top-4 right-4 z-50 p-3 bg-white/20 hover:bg-white/30 backdrop-blur-sm border border-white/30 rounded-full text-white transition-all duration-200"
-        title="Back to Home"
-      >
-        <ArrowLeftIcon className="w-5 h-5" />
-      </Link>
+      {/* Modern Navigation Header */}
+      <div className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-gray-900/95 via-purple-900/90 to-gray-900/95 backdrop-blur-xl border-b border-purple-500/30 shadow-2xl">
+        <div className="flex items-center justify-between px-4 md:px-8 py-4">
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg">
+              <span className="text-white font-bold text-xl">S</span>
+            </div>
+            <div>
+              <h1 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-purple-300 to-pink-300 text-transparent bg-clip-text">
+                SnapSolver Canvas
+              </h1>
+              <p className="text-xs text-purple-200/60 hidden md:block">Draw your equations and get instant solutions</p>
+            </div>
+          </div>
+          
+          <div className="flex items-center space-x-3">
+            <div className="hidden lg:flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
+              <div className="w-8 h-8 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white text-sm font-bold">
+                {user?.name?.charAt(0)?.toUpperCase() || 'U'}
+              </div>
+              <span className="text-white font-medium text-sm">{user?.name || 'User'}</span>
+            </div>
+            
+            <Link 
+              to="/" 
+              className="group p-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-xl text-white transition-all duration-300 hover:scale-105 shadow-lg"
+              title="Back to Home"
+            >
+              <ArrowLeftIcon className="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-300" />
+            </Link>
+          </div>
+        </div>
+      </div>
 
       <Sheet onOpenChange={handleOpenChange}>
         <SheetTrigger>
@@ -402,22 +427,37 @@ export default function Home() {
           </Button>
         </SheetTrigger>
 
-        <SheetContent side={"left"} className="bg-slate-950">
-          <SheetHeader>
+        <SheetContent side={"left"} className="bg-gradient-to-b from-gray-900 via-purple-900/50 to-gray-900 border-r border-purple-500/30">
+          <SheetHeader className="space-y-6">
             <SheetTitle>
-              <div className="font-semibold text-2xl text-white text-start mb-4">
-                SnapSolver
+              <div className="flex items-center space-x-3 mb-6">
+                <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg">
+                  <span className="text-white font-bold text-xl">S</span>
+                </div>
+                <div>
+                  <div className="font-bold text-2xl bg-gradient-to-r from-purple-300 to-pink-300 text-transparent bg-clip-text text-start">
+                    SnapSolver
+                  </div>
+                  <div className="text-purple-200/60 text-sm text-left">Canvas Tools</div>
+                </div>
               </div>
             </SheetTitle>
             <SheetDescription>
-              <div className="text-white/70 text-left space-y-2">
-                <p>Welcome, {user?.name || 'User'}!</p>
-                <p className="text-sm">Email: {user?.email}</p>
+              <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-4 border border-white/10">
+                <div className="flex items-center space-x-3 mb-3">
+                  <div className="w-10 h-10 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white text-sm font-bold">
+                    {user?.name?.charAt(0)?.toUpperCase() || 'U'}
+                  </div>
+                  <div>
+                    <p className="text-white font-medium">Welcome, {user?.name || 'User'}!</p>
+                    <p className="text-purple-200/60 text-sm">{user?.email}</p>
+                  </div>
+                </div>
                 <Button
                   onClick={logout}
                   variant="outline"
                   size="sm"
-                  className="mt-2 text-red-400 border-red-400 hover:bg-red-400 hover:text-white"
+                  className="w-full mt-3 text-red-400 border-red-400/50 hover:bg-red-400 hover:text-white hover:border-red-400 transition-all duration-300"
                 >
                   Logout
                 </Button>
@@ -425,86 +465,126 @@ export default function Home() {
             </SheetDescription>
           </SheetHeader>
 
-          <div className=" grid-cols-1 gap-4 mt-3 grid">
-            <SheetClose>
-              {" "}
-              <Button
-                onClick={() => {
-                  setReset(true);
-                  setIsMenuOpen(false);
-                }}
-                className="z-20 bg-red-600 hover:bg-red-700 text-white font-bold text-xl select-none w-full"
-                variant="default"
-                color="black"
-              >
-                Reset
-              </Button>
-            </SheetClose>
-            <SheetClose>
-              <Button
-                onClick={() => {
-                  runRoute();
-                  setIsMenuOpen(false);
-                }}
-                className="z-20 text-white font-bold text-xl bg-green-500 hover:bg-green-700 select-none w-full"
-                color="white"
-              >
-                Run
-              </Button>
-            </SheetClose>
-            <Group className="z-20 flex ">
-              {SWATCHES.map((swatch) => (
-                <ColorSwatch
-                className={`cursor-pointer hover:scale-110 ${color === swatch ? "border-2 border-white" : ""}`}
-                  key={swatch}
-                  color={swatch}
-                  onClick={() => setColor(swatch)}
-                />
-              ))}
+          <div className="space-y-6 mt-8">
+            {/* Action Buttons */}
+            <div className="space-y-3">
+              <SheetClose>
+                <Button
+                  onClick={() => {
+                    setReset(true);
+                    setIsMenuOpen(false);
+                  }}
+                  className="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold py-3 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  <span className="mr-2">🗑️</span>
+                  Reset Canvas
+                </Button>
+              </SheetClose>
+              <SheetClose>
+                <Button
+                  onClick={() => {
+                    runRoute();
+                    setIsMenuOpen(false);
+                  }}
+                  className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold py-3 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  <span className="mr-2">🚀</span>
+                  Calculate
+                </Button>
+              </SheetClose>
+            </div>
 
-              <button
-                className={` p-3 rounded-full  hover:scale-105 ${
-                  !eraserSelected
-                    ? "bg-white text-black"
-                    : " bg-slate-900 text-white"
-                }`}
-                onClick={() => seteraserSelecetd(false)}
-              >
-                <FaPencilAlt size={20} />
-              </button>
+            {/* Drawing Tools Section */}
+            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-4 border border-white/10">
+              <h3 className="text-white font-semibold mb-4 flex items-center">
+                <span className="mr-2">🎨</span>
+                Drawing Tools
+              </h3>
+              
+              {/* Tool Selection */}
+              <div className="flex gap-3 mb-4">
+                <button
+                  className={`flex-1 p-3 rounded-xl transition-all duration-300 ${
+                    !eraserSelected
+                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
+                      : "bg-gray-700/50 text-gray-300 hover:bg-gray-600/50"
+                  }`}
+                  onClick={() => seteraserSelecetd(false)}
+                >
+                  <FaPencilAlt size={18} className="mx-auto" />
+                  <div className="text-xs mt-1">Pen</div>
+                </button>
+                <button
+                  className={`flex-1 p-3 rounded-xl transition-all duration-300 ${
+                    eraserSelected
+                      ? "bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-lg"
+                      : "bg-gray-700/50 text-gray-300 hover:bg-gray-600/50"
+                  }`}
+                  onClick={() => seteraserSelecetd(true)}
+                >
+                  <FaEraser size={18} className="mx-auto" />
+                  <div className="text-xs mt-1">Eraser</div>
+                </button>
+              </div>
 
-              <button
-                className={` p-3 rounded-full  hover:scale-105 ${
-                  eraserSelected
-                    ? "bg-white text-black"
-                    : " bg-slate-900 text-white"
-                }`}
-                onClick={() => seteraserSelecetd(true)}
-              >
-                <FaEraser size={20} />
-              </button>
-            </Group>
+              {/* Color Palette */}
+              <div className="mb-4">
+                <h4 className="text-purple-200 text-sm font-medium mb-3">Colors</h4>
+                <div className="grid grid-cols-4 gap-2">
+                  {SWATCHES.map((swatch) => (
+                    <div
+                      key={swatch}
+                      className={`w-12 h-12 rounded-xl cursor-pointer transition-all duration-300 hover:scale-110 ${
+                        color === swatch 
+                          ? "ring-3 ring-white/70 ring-offset-2 ring-offset-gray-900 shadow-xl scale-105" 
+                          : "hover:ring-2 hover:ring-white/40"
+                      }`}
+                      style={{ backgroundColor: swatch }}
+                      onClick={() => setColor(swatch)}
+                    />
+                  ))}
+                </div>
+              </div>
 
-            <div className="bg-slate-300 px-4 rounded-lg flex items-center gap-4 mt-5">
-              <Slider
-                style={{ zIndex: 20 }}
-                aria-label="pen size"
-                orientation="horizontal"
-                valueLabelDisplay="auto"
-                defaultValue={eraserSelected ? 1 : 3}
-                min={1}
-                max={10}
-                step={1}
-                onChange={sliderChangeHandler}
-              />
-
-              <span>
-                {eraserSelected ? (
-                  <FaEraser size={17} />
-                ) : (
-                  <FaPencilAlt size={17} />
-                )}
-              </span>
+              {/* Size Slider */}
+              <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-4">
+                <h4 className="text-purple-200 text-sm font-medium mb-3 flex items-center justify-between">
+                  <span>{eraserSelected ? "Eraser" : "Pen"} Size</span>
+                  <span className="text-xs bg-purple-500/20 px-2 py-1 rounded-lg">
+                    {eraserSelected ? eraserSize : penSize}px
+                  </span>
+                </h4>
+                <div className="flex items-center gap-3">
+                  <div className="bg-gradient-to-r from-purple-500 to-pink-500 p-2 rounded-lg">
+                    {eraserSelected ? <FaEraser size={14} className="text-white" /> : <FaPencilAlt size={14} className="text-white" />}
+                  </div>
+                  <Slider
+                    className="flex-1"
+                    aria-label="pen size"
+                    orientation="horizontal"
+                    valueLabelDisplay="auto"
+                    defaultValue={eraserSelected ? 1 : 3}
+                    min={1}
+                    max={10}
+                    step={1}
+                    onChange={sliderChangeHandler}
+                    sx={{
+                      '& .MuiSlider-thumb': {
+                        backgroundColor: '#a855f7',
+                        '&:hover': {
+                          boxShadow: '0px 0px 0px 8px rgba(168, 85, 247, 0.16)',
+                        },
+                      },
+                      '& .MuiSlider-track': {
+                        backgroundColor: '#a855f7',
+                      },
+                      '& .MuiSlider-rail': {
+                        backgroundColor: '#4b5563',
+                      },
+                    }}
+                  />
+                </div>
+              </div>
             </div>
           </div>
 
@@ -520,97 +600,131 @@ export default function Home() {
         </SheetContent>
       </Sheet>
 
-      {/* Slider positioned absolutely */}
-      <div
-        style={{ position: "absolute", top: "35%", left: "40px", zIndex: 20 }}
-        className="bg-slate-300 px-1 py-3 rounded-lg hidden md:flex flex-col items-center gap-4"
-      >
-        <Slider
-          style={{ zIndex: 20, height: "200px" }}
-          aria-label="pen size"
-          orientation="vertical"
-          valueLabelDisplay="auto"
-          defaultValue={eraserSelected ? 1 : 3}
-          min={1}
-          max={10}
-          step={1}
-          onChange={sliderChangeHandler}
-        />
-
-        <span>
-          {eraserSelected ? <FaEraser size={17} /> : <FaPencilAlt size={17} />}
-        </span>
-      </div>
-
-      <div className="w-full h-14 bg-slate-900 z-20 top-0 left-0 block fixed md:hidden  ">
-        <div className="flex w-10/12 mx-auto justify-between items-center h-full">
-          <div className="font-semibold text-2xl text-white ">SnapSolver</div>
-          <div
-            className="p-2 bg-slate-700 rounded-full cursor-pointer hover:scale-105"
-            onClick={() => {
-              if (isMenuOpen) {
-                closeRef?.current?.click();
-              } else {
-                openRef?.current?.click();
-              }
-            }}
-          >
-            <MenuIcon className="text-white" />
+      {/* Modern Floating Toolbar */}
+      <div className="fixed left-6 top-1/2 -translate-y-1/2 z-30 hidden lg:flex flex-col gap-4">
+        <div className="bg-gray-900/90 backdrop-blur-xl border border-purple-500/30 rounded-2xl p-4 shadow-2xl">
+          <div className="flex flex-col items-center gap-4">
+            <div className="text-white text-sm font-medium mb-2">
+              {eraserSelected ? "Eraser" : "Pen"} Size
+            </div>
+            <Slider
+              style={{ height: "180px" }}
+              aria-label="pen size"
+              orientation="vertical"
+              valueLabelDisplay="auto"
+              defaultValue={eraserSelected ? 1 : 3}
+              min={1}
+              max={10}
+              step={1}
+              onChange={sliderChangeHandler}
+              sx={{
+                '& .MuiSlider-thumb': {
+                  backgroundColor: '#a855f7',
+                  '&:hover': {
+                    boxShadow: '0px 0px 0px 8px rgba(168, 85, 247, 0.16)',
+                  },
+                },
+                '& .MuiSlider-track': {
+                  backgroundColor: '#a855f7',
+                },
+                '& .MuiSlider-rail': {
+                  backgroundColor: '#4b5563',
+                },
+              }}
+            />
+            <div className="bg-gradient-to-r from-purple-500 to-pink-500 p-2 rounded-lg">
+              {eraserSelected ? <FaEraser size={16} className="text-white" /> : <FaPencilAlt size={16} className="text-white" />}
+            </div>
           </div>
         </div>
       </div>
-      <div className="gap-11 hidden md:flex justify-between items-center mx-8">
+
+      {/* Mobile Menu Button */}
+      <div className="fixed top-20 right-6 z-40 lg:hidden">
+        <div
+          className="p-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl cursor-pointer hover:scale-105 transition-all duration-300 shadow-2xl"
+          onClick={() => {
+            if (isMenuOpen) {
+              closeRef?.current?.click();
+            } else {
+              openRef?.current?.click();
+            }
+          }}
+        >
+          <MenuIcon className="text-white w-6 h-6" />
+        </div>
+      </div>
+      {/* Modern Bottom Toolbar for Desktop */}
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-30 hidden md:flex items-center gap-6 bg-gray-900/95 backdrop-blur-xl border border-purple-500/30 rounded-3xl px-8 py-4 shadow-2xl">
+        {/* Reset Button */}
         <Button
           onClick={() => setReset(true)}
-          className="z-20 bg-red-600 hover:bg-red-700 text-white font-bold text-xl flex-1 select-none "
-          variant="default"
-          color="black"
+          className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold px-6 py-3 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
         >
+          <span className="mr-2">🗑️</span>
           Reset
         </Button>
-        <Group className="z-20">
+
+        {/* Drawing Tools Section */}
+        <div className="flex items-center gap-3 px-4 py-2 bg-white/5 rounded-2xl border border-white/10">
+          {/* Pen Tool */}
           <button
-            className={` p-3 rounded-full  hover:scale-105 ${
+            className={`p-3 rounded-xl transition-all duration-300 hover:scale-105 ${
               !eraserSelected
-                ? "bg-white text-black"
-                : " bg-slate-900 text-white"
+                ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
+                : "bg-gray-700 text-gray-300 hover:bg-gray-600"
             }`}
             onClick={() => seteraserSelecetd(false)}
+            title="Pen Tool"
           >
-            <FaPencilAlt size={20} />
+            <FaPencilAlt size={18} />
           </button>
-          {SWATCHES.map((swatch) => (
-            <ColorSwatch
-              className={`cursor-pointer hover:scale-110 ${color === swatch ? "border-2 border-white" : ""}`}
-              key={swatch}
-              color={swatch}
-              onClick={() => setColor(swatch)}
-            />
-          ))}
+
+          {/* Color Swatches */}
+          <div className="flex items-center gap-2 mx-2">
+            {SWATCHES.map((swatch) => (
+              <div
+                key={swatch}
+                className={`w-10 h-10 rounded-full cursor-pointer transition-all duration-300 hover:scale-110 ${
+                  color === swatch 
+                    ? "ring-4 ring-white/70 ring-offset-2 ring-offset-gray-900 shadow-xl" 
+                    : "hover:ring-2 hover:ring-white/40 hover:ring-offset-1 hover:ring-offset-gray-900"
+                }`}
+                style={{ backgroundColor: swatch }}
+                onClick={() => setColor(swatch)}
+                title={`Color: ${swatch}`}
+              />
+            ))}
+          </div>
+
+          {/* Eraser Tool */}
           <button
-            className={` p-3 rounded-full  hover:scale-105 ${
+            className={`p-3 rounded-xl transition-all duration-300 hover:scale-105 ${
               eraserSelected
-                ? "bg-white text-black"
-                : " bg-slate-900 text-white"
+                ? "bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-lg"
+                : "bg-gray-700 text-gray-300 hover:bg-gray-600"
             }`}
             onClick={() => seteraserSelecetd(true)}
+            title="Eraser Tool"
           >
-            <FaEraser size={20} />
+            <FaEraser size={18} />
           </button>
-        </Group>
+        </div>
+
+        {/* Calculate Button */}
         <Button
           onClick={runRoute}
-          className="z-20 bg-green-600 hover:bg-green-700 text-white font-bold text-xl flex-1 select-none"
-          variant="default"
-          color="white"
+          className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold px-6 py-3 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
         >
-          Run
+          <span className="mr-2">🚀</span>
+          Calculate
         </Button>
       </div>
+      {/* Enhanced Canvas - Full Screen Drawing Area */}
       <canvas
         ref={canvasRef}
         id="canvas"
-        className="absolute top-0 left-0 w-full h-full bg-black touch-none"
+        className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-gray-900 via-black to-gray-900 touch-none"
         onMouseDown={startDrawing}
         onMouseMove={draw}
         onMouseUp={stopDrawing}
@@ -620,26 +734,24 @@ export default function Home() {
         onTouchEnd={stopDrawing}
       />
 
+      {/* Centered Result Display */}
       {latexExpression &&
         latexExpression.map((latex, index) => (
-          <Draggable
+          <div
             key={index}
-            defaultPosition={latexPosition}
-            onStop={(_, data) => setLatexPosition({ x: data.x, y: data.y })}
+            className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-6 text-white rounded-2xl shadow-2xl bg-gradient-to-r from-gray-900/95 to-purple-900/95 backdrop-blur-xl border border-purple-500/30 max-w-[90vw] md:max-w-[600px] break-words z-40"
+            style={{
+              maxHeight: '60vh',
+              overflowY: 'auto'
+            }}
+            onTouchStart={() => handleTouchStart()}
+            onTouchEnd={() => handleTouchEnd(index)}
+            onClick={() => handleDoubleTap(index)}
           >
-            <div
-              className="absolute p-2 text-white rounded shadow-md bg-black bg-opacity-50 max-w-[90vw] md:max-w-[70vw] lg:max-w-[50vw] break-words cursor-move"
-              style={{
-                maxHeight: '80vh',
-                overflowY: 'auto'
-              }}
-              onTouchStart={() => handleTouchStart()}
-              onTouchEnd={() => handleTouchEnd(index)}
-              onClick={() => handleDoubleTap(index)}
-            >
-              <div className="latex-content text-sm md:text-base lg:text-lg whitespace-normal">{latex}</div>
+            <div className="latex-content text-lg md:text-xl lg:text-2xl text-center whitespace-normal bg-black/30 rounded-xl p-4 border border-purple-500/20 backdrop-blur-sm">
+              {latex}
             </div>
-          </Draggable>
+          </div>
         ))}
     </>
   );

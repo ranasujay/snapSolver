@@ -18,12 +18,7 @@ import { Link } from "react-router-dom";
 import calc from "../../assets/calc.png";
 import showcase2 from "../../assets/showcase2.png";
 import showcase1 from "../../assets/showcase1.png";
-import { AnimatedTooltip } from "@/components/ui/animated-tooltip";
-import { BackgroundBeams } from "@/components/ui/background-beams";
-import { Boxes } from "@/components/ui/background-boxes";
 import { cn } from "@/lib/utils";
-import { BackgroundLines } from "@/components/ui/background-lines";
-import { CardSpotlight } from "@/components/ui/card-spotlight";
 // import { apiConnector } from "../../Services/api";
 import { useAuth } from "@/contexts/AuthContext";
 import CountUp from 'react-countup'
@@ -73,39 +68,7 @@ const people = [
   },
 ];
 
-const FloatingIconSquare = ({
-  icon: Icon,
-  initialX,
-  initialY,
-}: {
-  icon: React.FC<React.SVGProps<SVGSVGElement>>;
-  initialX: number;
-  initialY: number;
-}) => {
-  const controls = useAnimation();
 
-  useEffect(() => {
-    controls.start({
-      x: [initialX, initialX + 40, initialX - 40, initialX],
-      y: [initialY, initialY - 40, initialY + 40, initialY],
-      rotate: [0, 5, -5, 0],
-      transition: {
-        duration: 20,
-        repeat: Infinity,
-        repeatType: "reverse",
-        ease: "easeInOut",
-      },
-    });
-  }, [controls, initialX, initialY]);
-
-  return (
-    <motion.div animate={controls} className="absolute">
-      <div className="bg-purple-600 bg-opacity-20 backdrop-blur-sm p-6 rounded-2xl shadow-lg border border-purple-400 translate-x-[350px] md:translate-x-0">
-        <Icon className="w-12 h-12 text-purple-300" />
-      </div>
-    </motion.div>
-  );
-};
 
 const MacScreen = ({ children }: { children: React.ReactNode }) => (
   <div className="bg-gray-800 rounded-2xl p-4 shadow-2xl max-w-6xl mx-auto z-10 sticky top-28">
@@ -259,67 +222,155 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-indigo-900 text-white">
-      <nav className="w-full p-3 md:p-5 flex justify-between items-center bg-gray-800 bg-opacity-50 backdrop-blur-md fixed top-0 z-50">
-        <motion.h1
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-2xl md:text-3xl font-bold text-purple-300"
-        >
-          SnapSolver
-        </motion.h1>
-        <motion.div>
-          {isAuthenticated ? (
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-3">
-                <h2 className="font-semibold text-white">👋 {user?.name || userName[currentname]}</h2>
-                <div className="w-10 h-10 rounded-full bg-violet-600 flex items-center justify-center text-white font-bold">
-                  {user?.name?.charAt(0)?.toUpperCase() || 'U'}
+      {/* Modern Enhanced Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-gray-900/95 via-purple-900/90 to-gray-900/95 backdrop-blur-xl border-b border-purple-500/30 shadow-2xl">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-20">
+            
+            {/* Enhanced Logo Section */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="flex items-center space-x-4"
+            >
+              <div className="relative group">
+                {/* Main Logo Container */}
+                <div className="w-14 h-14 bg-gradient-to-br from-purple-500 via-pink-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-2xl transform rotate-3 group-hover:rotate-0 transition-all duration-500 hover:scale-110">
+                  {/* Calculator Icon */}
+                  <div className="relative">
+                    <div className="w-8 h-8 bg-white/20 rounded-lg flex flex-col justify-center items-center backdrop-blur-sm">
+                      <div className="grid grid-cols-2 gap-0.5 w-5 h-5">
+                        <div className="w-1.5 h-1.5 bg-white rounded-full opacity-90"></div>
+                        <div className="w-1.5 h-1.5 bg-white rounded-full opacity-70"></div>
+                        <div className="w-1.5 h-1.5 bg-white rounded-full opacity-70"></div>
+                        <div className="w-1.5 h-1.5 bg-white rounded-full opacity-90"></div>
+                      </div>
+                    </div>
+                    {/* Sparkle Effect */}
+                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full animate-pulse shadow-lg"></div>
+                  </div>
                 </div>
+                {/* Glow Effect */}
+                <div className="absolute inset-0 w-14 h-14 bg-gradient-to-br from-purple-400 to-pink-400 rounded-2xl blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-500"></div>
               </div>
-              <div className="flex gap-2">
-                <Link to="/canvas">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="bg-blue-600 text-white px-4 py-1 md:px-6 md:py-2 rounded-full font-semibold shadow-lg"
-                  >
-                    Go to Canvas
-                  </motion.button>
-                </Link>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={logout}
-                  className="bg-red-600 text-white px-4 py-1 md:px-6 md:py-2 rounded-full font-semibold shadow-lg"
-                >
-                  Logout
-                </motion.button>
+              
+              <div className="relative">
+                <h1 className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-purple-300 via-pink-300 to-purple-400 text-transparent bg-clip-text tracking-tight">
+                  SnapSolver
+                </h1>
               </div>
-            </div>
-          ) : (
-            <div className="flex gap-2">
-              <Link to="/login">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="bg-purple-600 text-white px-4 py-1 md:px-6 md:py-2 rounded-full font-semibold shadow-lg"
-                >
-                  Login
-                </motion.button>
-              </Link>
-              <Link to="/register">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="bg-green-600 text-white px-4 py-1 md:px-6 md:py-2 rounded-full font-semibold shadow-lg"
-                >
-                  Sign Up
-                </motion.button>
-              </Link>
-            </div>
-          )}
-        </motion.div>
+            </motion.div>
+
+            {/* Auth Section */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="flex items-center space-x-4"
+            >
+              {isAuthenticated ? (
+                <div className="flex items-center space-x-4">
+                  {/* Canvas Button */}
+                  <Link to="/canvas">
+                    <motion.button
+                      whileHover={{ scale: 1.05, y: -2 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="group bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-6 py-2.5 rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center space-x-2"
+                    >
+                      <span>🎨</span>
+                      <span className="hidden sm:inline">Open Canvas</span>
+                      <span className="sm:hidden">Canvas</span>
+                    </motion.button>
+                  </Link>
+
+                  {/* User Dropdown */}
+                  <div className="relative group">
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      className="flex items-center space-x-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-2xl px-4 py-2.5 border border-white/20 hover:border-white/30 transition-all duration-300 shadow-lg"
+                    >
+                      <div className="w-9 h-9 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+                        {user?.name?.charAt(0)?.toUpperCase() || 'U'}
+                      </div>
+                      <div className="hidden md:block text-left">
+                        <p className="text-white font-medium text-sm">{user?.name || userName[currentname]}</p>
+                        <p className="text-purple-200/60 text-xs">{user?.email}</p>
+                      </div>
+                      <svg className="w-4 h-4 text-purple-200 group-hover:text-white transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </motion.button>
+
+                    {/* Dropdown Menu */}
+                    <div className="absolute right-0 top-full mt-2 w-64 bg-gray-900/95 backdrop-blur-xl border border-purple-500/30 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                      <div className="p-4">
+                        {/* User Info */}
+                        <div className="flex items-center space-x-3 pb-4 border-b border-purple-500/20">
+                          <div className="w-12 h-12 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+                            {user?.name?.charAt(0)?.toUpperCase() || 'U'}
+                          </div>
+                          <div>
+                            <p className="text-white font-semibold">{user?.name || userName[currentname]}</p>
+                            <p className="text-purple-200/70 text-sm">{user?.email}</p>
+                          </div>
+                        </div>
+
+                        {/* Menu Items */}
+                        <div className="py-3 space-y-1">
+                          <Link to="/canvas" className="flex items-center space-x-3 px-3 py-2 rounded-xl hover:bg-white/10 transition-colors duration-200 group/item">
+                            <span className="text-lg">🎨</span>
+                            <span className="text-white group-hover/item:text-purple-300">Open Canvas</span>
+                          </Link>
+                        </div>
+
+                        {/* Logout Button */}
+                        <div className="pt-3 border-t border-purple-500/20">
+                          <motion.button
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            onClick={logout}
+                            className="w-full flex items-center space-x-3 px-3 py-2.5 bg-red-500/20 hover:bg-red-500/30 border border-red-400/30 rounded-xl transition-all duration-200 group/logout"
+                          >
+                            <span className="text-lg">👋</span>
+                            <span className="text-red-200 group-hover/logout:text-white font-medium">Sign Out</span>
+                          </motion.button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex items-center space-x-3">
+                  <Link to="/login">
+                    <motion.button
+                      whileHover={{ scale: 1.05, y: -2 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-6 py-2.5 rounded-2xl font-medium backdrop-blur-sm transition-all duration-300 hover:shadow-lg"
+                    >
+                      Login
+                    </motion.button>
+                  </Link>
+                  
+                  <Link to="/register">
+                    <motion.button
+                      whileHover={{ scale: 1.05, y: -2 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-6 py-2.5 rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                    >
+                      Get Started
+                    </motion.button>
+                  </Link>
+                </div>
+              )}
+
+
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Enhanced glow effect */}
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 via-transparent to-pink-600/10 pointer-events-none"></div>
       </nav>
 
       <main className="pt-16 md:pt-24">
