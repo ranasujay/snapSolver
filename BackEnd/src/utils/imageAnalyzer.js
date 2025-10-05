@@ -4,7 +4,7 @@ const { GEMINI_API_KEY } = require('../config/constants');
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 
 async function analyzeImage(imageBuffer, dict_of_vars) {
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
   const prompt = `You have been given an image with some mathematical expressions, equations, or graphical problems, and you need to solve them.
   Note: Use the PEMDAS rule for solving mathematical expressions. PEMDAS stands for the Priority Order: Parentheses, Exponents, Multiplication and Division (from left to right), Addition and Subtraction (from left to right). Parentheses have the highest priority, followed by Exponents, then Multiplication and Division, and lastly Addition and Subtraction.

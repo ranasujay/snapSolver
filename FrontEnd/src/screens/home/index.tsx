@@ -1,10 +1,13 @@
 import { ColorSwatch, Group } from "@mantine/core";
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef, useState, useCallback } from "react";
-import axios from "axios";
 import Draggable from "react-draggable";
 import { SWATCHES } from "@/constants";
+import { calculatorAPI } from "@/Services/api";
+import { useAuth } from "@/contexts/AuthContext";
 import { MenuIcon } from "lucide-react";
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { Link } from "react-router-dom";
 import {
   Sheet,
   SheetContent,
@@ -54,6 +57,7 @@ declare global {
 }
 
 export default function Home() {
+  const { user, logout } = useAuth();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [color, setColor] = useState("rgb(255, 255, 255)");
@@ -275,62 +279,64 @@ export default function Home() {
     const canvas = canvasRef.current;
 
     if (canvas) {
-      const toastId = toast.loading('Processing your equation...');
-      const response = await axios({
-        method: "post",
-        url: `${import.meta.env.VITE_API_URL}/calculate`,
-        data: {
-          image: canvas.toDataURL("image/png"),
-          dict_of_vars: dictOfVars,
-        },
-      });
+      try {
+        const toastId = toast.loading('Processing your equation...');
+        
+        const response = await calculatorAPI.processImage(
+          canvas.toDataURL("image/png"), 
+          dictOfVars
+        );
 
-      toast.success('Solution found! 🎯', {
-        id: toastId,
-        duration: 3000,
-      });
+        toast.success('Solution found! 🎯', {
+          id: toastId,
+          duration: 3000,
+        });
 
-      const resp = await response.data;
-      console.log("Response", resp);
-      resp.data.forEach((data: Response) => {
-        if (data.assign === true) {
-          setDictOfVars({
-            ...dictOfVars,
-            [data.expr]: data.result,
-          });
-        }
-      });
-      const ctx = canvas.getContext("2d");
-      const imageData = ctx!.getImageData(0, 0, canvas.width, canvas.height);
-      let minX = canvas.width,
-        minY = canvas.height,
-        maxX = 0,
-        maxY = 0;
+        const resp = response.data;
+        console.log("Response", resp);
+        resp.data.forEach((data: Response) => {
+          if (data.assign === true) {
+            setDictOfVars({
+              ...dictOfVars,
+              [data.expr]: data.result,
+            });
+          }
+        });
+        const ctx = canvas.getContext("2d");
+        const imageData = ctx!.getImageData(0, 0, canvas.width, canvas.height);
+        let minX = canvas.width,
+          minY = canvas.height,
+          maxX = 0,
+          maxY = 0;
 
-      for (let y = 0; y < canvas.height; y++) {
-        for (let x = 0; x < canvas.width; x++) {
-          const i = (y * canvas.width + x) * 4;
-          if (imageData.data[i + 3] > 0) {
-            minX = Math.min(minX, x);
-            minY = Math.min(minY, y);
-            maxX = Math.max(maxX, x);
-            maxY = Math.max(maxY, y);
+        for (let y = 0; y < canvas.height; y++) {
+          for (let x = 0; x < canvas.width; x++) {
+            const i = (y * canvas.width + x) * 4;
+            if (imageData.data[i + 3] > 0) {
+              minX = Math.min(minX, x);
+              minY = Math.min(minY, y);
+              maxX = Math.max(maxX, x);
+              maxY = Math.max(maxY, y);
+            }
           }
         }
+
+        const centerX = canvas.width / 2 - 100;  // Subtracting half the assumed width of the LaTeX container
+        const centerY = canvas.height / 2 - 25;  // Subtracting half the assumed height of the LaTeX container
+
+        setLatexPosition({ x: centerX, y: centerY });
+        resp.data.forEach((data: Response) => {
+          setTimeout(() => {
+            setResult({
+              expression: data.expr,
+              answer: data.result,
+            });
+          }, 1000);
+        });
+      } catch (error: any) {
+        console.error('Error processing image:', error);
+        toast.error(error.response?.data?.message || 'Error processing equation. Please try again.');
       }
-
-      const centerX = canvas.width / 2 - 100;  // Subtracting half the assumed width of the LaTeX container
-      const centerY = canvas.height / 2 - 25;  // Subtracting half the assumed height of the LaTeX container
-
-      setLatexPosition({ x: centerX, y: centerY });
-      resp.data.forEach((data: Response) => {
-        setTimeout(() => {
-          setResult({
-            expression: data.expr,
-            answer: data.result,
-          });
-        }, 1000);
-      });
     }
   };
 
@@ -380,6 +386,15 @@ export default function Home() {
 
   return (
     <>
+      {/* Back Button */}
+      <Link 
+        to="/" 
+        className="fixed top-4 right-4 z-50 p-3 bg-white/20 hover:bg-white/30 backdrop-blur-sm border border-white/30 rounded-full text-white transition-all duration-200"
+        title="Back to Home"
+      >
+        <ArrowLeftIcon className="w-5 h-5" />
+      </Link>
+
       <Sheet onOpenChange={handleOpenChange}>
         <SheetTrigger>
           <Button variant="outline" className="hidden" ref={openRef}>
@@ -394,7 +409,20 @@ export default function Home() {
                 SnapSolver
               </div>
             </SheetTitle>
-            <SheetDescription></SheetDescription>
+            <SheetDescription>
+              <div className="text-white/70 text-left space-y-2">
+                <p>Welcome, {user?.name || 'User'}!</p>
+                <p className="text-sm">Email: {user?.email}</p>
+                <Button
+                  onClick={logout}
+                  variant="outline"
+                  size="sm"
+                  className="mt-2 text-red-400 border-red-400 hover:bg-red-400 hover:text-white"
+                >
+                  Logout
+                </Button>
+              </div>
+            </SheetDescription>
           </SheetHeader>
 
           <div className=" grid-cols-1 gap-4 mt-3 grid">

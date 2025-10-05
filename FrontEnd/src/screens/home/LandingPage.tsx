@@ -25,8 +25,7 @@ import { cn } from "@/lib/utils";
 import { BackgroundLines } from "@/components/ui/background-lines";
 import { CardSpotlight } from "@/components/ui/card-spotlight";
 // import { apiConnector } from "../../Services/api";
-import { useAuth0 } from "@auth0/auth0-react";
-import { IoMdArrowDropdown } from "react-icons/io";
+import { useAuth } from "@/contexts/AuthContext";
 import CountUp from 'react-countup'
 
 const people = [
@@ -224,7 +223,7 @@ export default function LandingPage() {
   const [isHovered, setIsHovered] = useState(false);
   const [userName,setuserName] = useState<(string|undefined)[]>(['Creator','Explorer','innovator']);
   const [currentname,setcurrentname] = useState(0);
-  const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
+  const { user, isAuthenticated, logout } = useAuth();
 
   useEffect(() => {
 
@@ -271,35 +270,54 @@ export default function LandingPage() {
         </motion.h1>
         <motion.div>
           {isAuthenticated ? (
-            <div className="relative">
-              <div className="group flex items-center gap-3 cursor-pointer">
-              <h2 className="font-semibold">👋 {userName[currentname]}</h2>
-              <div className="w-12 h-12 rounded-full bg-violet-900 p-1"><img src={user?.picture} alt={user?.name} className="rounded-full"/></div>
-              <IoMdArrowDropdown size={24} fontWeight={900} className="group-hover:rotate-180 transition-transform duration-200 font-bold" />
-              
-
-              <div className="absolute bg-violet-900 rounded-lg px-4 py-3 top-14 right-4 opacity-0 group-hover:opacity-100 hover:bg-violet-950 font-semibold">
-              
-              <button
-                onClick={() =>
-                  logout({ logoutParams: { returnTo: window.location.origin } })
-                }
-              >
-                Log Out
-              </button>
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3">
+                <h2 className="font-semibold text-white">👋 {user?.name || userName[currentname]}</h2>
+                <div className="w-10 h-10 rounded-full bg-violet-600 flex items-center justify-center text-white font-bold">
+                  {user?.name?.charAt(0)?.toUpperCase() || 'U'}
+                </div>
               </div>
+              <div className="flex gap-2">
+                <Link to="/canvas">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="bg-blue-600 text-white px-4 py-1 md:px-6 md:py-2 rounded-full font-semibold shadow-lg"
+                  >
+                    Go to Canvas
+                  </motion.button>
+                </Link>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={logout}
+                  className="bg-red-600 text-white px-4 py-1 md:px-6 md:py-2 rounded-full font-semibold shadow-lg"
+                >
+                  Logout
+                </motion.button>
               </div>
-
             </div>
           ) : (
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-purple-600 text-white px-4 py-1 md:xp-6 md:py-2 rounded-full font-semibold shadow-lg flex gap-2 items-center"
-              onClick={() => loginWithRedirect()}
-            >
-              Sign Up
-            </motion.button>
+            <div className="flex gap-2">
+              <Link to="/login">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-purple-600 text-white px-4 py-1 md:px-6 md:py-2 rounded-full font-semibold shadow-lg"
+                >
+                  Login
+                </motion.button>
+              </Link>
+              <Link to="/register">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-green-600 text-white px-4 py-1 md:px-6 md:py-2 rounded-full font-semibold shadow-lg"
+                >
+                  Sign Up
+                </motion.button>
+              </Link>
+            </div>
           )}
         </motion.div>
       </nav>

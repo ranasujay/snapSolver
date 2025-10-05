@@ -1,17 +1,44 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import Home from "./screens/home";
 import LandingPage from "./screens/home/LandingPage";
-import { useAuth0 } from "@auth0/auth0-react";
+import Login from "./screens/auth/Login";
+import Register from "./screens/auth/Register";
+import { useAuth } from "./contexts/AuthContext";
 import { ReactNode } from "react";
 
 const ProtectedRoute = ({ children }: { children: ReactNode }) => {
-  const { isAuthenticated, loginWithRedirect } = useAuth0();
+  const { isAuthenticated, isLoading } = useAuth();
+  
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900">
+        <div className="text-white text-xl">Loading...</div>
+      </div>
+    );
+  }
+  
   if (isAuthenticated) {
-    return children;
+    return <>{children}</>;
   } else {
-    // If not authenticated, trigger Auth0 login
-    loginWithRedirect();
-    return null; // Prevent further rendering until logged in
+    return <Navigate to="/login" replace />;
+  }
+};
+
+const AuthOnlyRoute = ({ children }: { children: ReactNode }) => {
+  const { isAuthenticated, isLoading } = useAuth();
+  
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900">
+        <div className="text-white text-xl">Loading...</div>
+      </div>
+    );
+  }
+  
+  if (isAuthenticated) {
+    return <Navigate to="/canvas" replace />;
+  } else {
+    return <>{children}</>;
   }
 };
 
@@ -19,7 +46,26 @@ const App = () => {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<LandingPage />}></Route>
+        <Route 
+          path="/" 
+          element={<LandingPage />} 
+        />
+        <Route 
+          path="/login" 
+          element={
+            <AuthOnlyRoute>
+              <Login />
+            </AuthOnlyRoute>
+          } 
+        />
+        <Route 
+          path="/register" 
+          element={
+            <AuthOnlyRoute>
+              <Register />
+            </AuthOnlyRoute>
+          } 
+        />
         <Route
           path="/canvas"
           element={
@@ -27,8 +73,8 @@ const App = () => {
               <Home />
             </ProtectedRoute>
           }
-        ></Route>
-        <Route path="*" element={<LandingPage />}></Route>
+        />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </div>
   );
