@@ -1,7 +1,7 @@
-import { ColorSwatch, Group } from "@mantine/core";
+
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef, useState, useCallback } from "react";
-import Draggable from "react-draggable";
+
 import { SWATCHES } from "@/constants";
 import { calculatorAPI } from "@/Services/api";
 import { useAuth } from "@/contexts/AuthContext";
@@ -64,7 +64,7 @@ export default function Home() {
   const [reset, setReset] = useState(false);
   const [dictOfVars, setDictOfVars] = useState({});
   const [result, setResult] = useState<GeneratedResult>();
-  const [latexPosition, setLatexPosition] = useState({ x: 10, y: 200 });
+
   const [latexExpression, setLatexExpression] = useState<Array<string>>([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [penSize, setPenSize] = useState<number>(3);
@@ -321,10 +321,7 @@ export default function Home() {
           }
         }
 
-        const centerX = canvas.width / 2 - 100;  // Subtracting half the assumed width of the LaTeX container
-        const centerY = canvas.height / 2 - 25;  // Subtracting half the assumed height of the LaTeX container
 
-        setLatexPosition({ x: centerX, y: centerY });
         resp.data.forEach((data: Response) => {
           setTimeout(() => {
             setResult({
@@ -387,23 +384,27 @@ export default function Home() {
   return (
     <>
       {/* Modern Navigation Header */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-gray-900/95 via-purple-900/90 to-gray-900/95 backdrop-blur-xl border-b border-purple-500/30 shadow-2xl">
+      <div className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-gray-900/95 via-slate-800/90 to-gray-900/95 backdrop-blur-xl border-b border-emerald-500/30 shadow-2xl">
         <div className="flex items-center justify-between px-4 md:px-8 py-4">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg">
-              <span className="text-white font-bold text-xl">S</span>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg">
+              <img 
+                src="/logo.svg" 
+                alt="SnapSolver Logo" 
+                className="w-full h-full rounded-xl"
+              />
             </div>
             <div>
-              <h1 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-purple-300 to-pink-300 text-transparent bg-clip-text">
+              <h1 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-emerald-300 to-teal-300 text-transparent bg-clip-text">
                 SnapSolver Canvas
               </h1>
-              <p className="text-xs text-purple-200/60 hidden md:block">Draw your equations and get instant solutions</p>
+              <p className="text-xs text-emerald-200/60 hidden md:block">Draw your equations and get instant solutions</p>
             </div>
           </div>
           
           <div className="flex items-center space-x-3">
             <div className="hidden lg:flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
-              <div className="w-8 h-8 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white text-sm font-bold">
+              <div className="w-8 h-8 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-full flex items-center justify-center text-white text-sm font-bold">
                 {user?.name?.charAt(0)?.toUpperCase() || 'U'}
               </div>
               <span className="text-white font-medium text-sm">{user?.name || 'User'}</span>
@@ -427,30 +428,30 @@ export default function Home() {
           </Button>
         </SheetTrigger>
 
-        <SheetContent side={"left"} className="bg-gradient-to-b from-gray-900 via-purple-900/50 to-gray-900 border-r border-purple-500/30">
+        <SheetContent side={"left"} className="bg-gradient-to-b from-gray-900 via-slate-900/50 to-gray-900 border-r border-emerald-500/30">
           <SheetHeader className="space-y-6">
             <SheetTitle>
               <div className="flex items-center space-x-3 mb-6">
-                <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg">
+                <div className="w-12 h-12 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-xl flex items-center justify-center shadow-lg">
                   <span className="text-white font-bold text-xl">S</span>
                 </div>
                 <div>
-                  <div className="font-bold text-2xl bg-gradient-to-r from-purple-300 to-pink-300 text-transparent bg-clip-text text-start">
+                  <div className="font-bold text-2xl bg-gradient-to-r from-emerald-300 to-teal-300 text-transparent bg-clip-text text-start">
                     SnapSolver
                   </div>
-                  <div className="text-purple-200/60 text-sm text-left">Canvas Tools</div>
+                  <div className="text-emerald-200/60 text-sm text-left">Canvas Tools</div>
                 </div>
               </div>
             </SheetTitle>
             <SheetDescription>
               <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-4 border border-white/10">
                 <div className="flex items-center space-x-3 mb-3">
-                  <div className="w-10 h-10 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white text-sm font-bold">
+                  <div className="w-10 h-10 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-full flex items-center justify-center text-white text-sm font-bold">
                     {user?.name?.charAt(0)?.toUpperCase() || 'U'}
                   </div>
                   <div>
                     <p className="text-white font-medium">Welcome, {user?.name || 'User'}!</p>
-                    <p className="text-purple-200/60 text-sm">{user?.email}</p>
+                    <p className="text-emerald-200/60 text-sm">{user?.email}</p>
                   </div>
                 </div>
                 <Button
@@ -506,7 +507,7 @@ export default function Home() {
                 <button
                   className={`flex-1 p-3 rounded-xl transition-all duration-300 ${
                     !eraserSelected
-                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
+                      ? "bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg"
                       : "bg-gray-700/50 text-gray-300 hover:bg-gray-600/50"
                   }`}
                   onClick={() => seteraserSelecetd(false)}
@@ -529,7 +530,7 @@ export default function Home() {
 
               {/* Color Palette */}
               <div className="mb-4">
-                <h4 className="text-purple-200 text-sm font-medium mb-3">Colors</h4>
+                <h4 className="text-emerald-200 text-sm font-medium mb-3">Colors</h4>
                 <div className="grid grid-cols-4 gap-2">
                   {SWATCHES.map((swatch) => (
                     <div
@@ -548,14 +549,14 @@ export default function Home() {
 
               {/* Size Slider */}
               <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-4">
-                <h4 className="text-purple-200 text-sm font-medium mb-3 flex items-center justify-between">
+                <h4 className="text-emerald-200 text-sm font-medium mb-3 flex items-center justify-between">
                   <span>{eraserSelected ? "Eraser" : "Pen"} Size</span>
-                  <span className="text-xs bg-purple-500/20 px-2 py-1 rounded-lg">
+                  <span className="text-xs bg-emerald-500/20 px-2 py-1 rounded-lg">
                     {eraserSelected ? eraserSize : penSize}px
                   </span>
                 </h4>
                 <div className="flex items-center gap-3">
-                  <div className="bg-gradient-to-r from-purple-500 to-pink-500 p-2 rounded-lg">
+                  <div className="bg-gradient-to-r from-emerald-500 to-teal-500 p-2 rounded-lg">
                     {eraserSelected ? <FaEraser size={14} className="text-white" /> : <FaPencilAlt size={14} className="text-white" />}
                   </div>
                   <Slider
@@ -602,7 +603,7 @@ export default function Home() {
 
       {/* Modern Floating Toolbar */}
       <div className="fixed left-6 top-1/2 -translate-y-1/2 z-30 hidden lg:flex flex-col gap-4">
-        <div className="bg-gray-900/90 backdrop-blur-xl border border-purple-500/30 rounded-2xl p-4 shadow-2xl">
+        <div className="bg-gray-900/90 backdrop-blur-xl border border-emerald-500/30 rounded-2xl p-4 shadow-2xl">
           <div className="flex flex-col items-center gap-4">
             <div className="text-white text-sm font-medium mb-2">
               {eraserSelected ? "Eraser" : "Pen"} Size
@@ -632,7 +633,7 @@ export default function Home() {
                 },
               }}
             />
-            <div className="bg-gradient-to-r from-purple-500 to-pink-500 p-2 rounded-lg">
+            <div className="bg-gradient-to-r from-emerald-500 to-teal-500 p-2 rounded-lg">
               {eraserSelected ? <FaEraser size={16} className="text-white" /> : <FaPencilAlt size={16} className="text-white" />}
             </div>
           </div>
@@ -642,7 +643,7 @@ export default function Home() {
       {/* Mobile Menu Button */}
       <div className="fixed top-20 right-6 z-40 lg:hidden">
         <div
-          className="p-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl cursor-pointer hover:scale-105 transition-all duration-300 shadow-2xl"
+          className="p-3 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl cursor-pointer hover:scale-105 transition-all duration-300 shadow-2xl"
           onClick={() => {
             if (isMenuOpen) {
               closeRef?.current?.click();
@@ -655,7 +656,7 @@ export default function Home() {
         </div>
       </div>
       {/* Modern Bottom Toolbar for Desktop */}
-      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-30 hidden md:flex items-center gap-6 bg-gray-900/95 backdrop-blur-xl border border-purple-500/30 rounded-3xl px-8 py-4 shadow-2xl">
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-30 hidden md:flex items-center gap-6 bg-gray-900/95 backdrop-blur-xl border border-emerald-500/30 rounded-3xl px-8 py-4 shadow-2xl">
         {/* Reset Button */}
         <Button
           onClick={() => setReset(true)}
@@ -671,7 +672,7 @@ export default function Home() {
           <button
             className={`p-3 rounded-xl transition-all duration-300 hover:scale-105 ${
               !eraserSelected
-                ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
+                ? "bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg"
                 : "bg-gray-700 text-gray-300 hover:bg-gray-600"
             }`}
             onClick={() => seteraserSelecetd(false)}
@@ -739,7 +740,7 @@ export default function Home() {
         latexExpression.map((latex, index) => (
           <div
             key={index}
-            className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-6 text-white rounded-2xl shadow-2xl bg-gradient-to-r from-gray-900/95 to-purple-900/95 backdrop-blur-xl border border-purple-500/30 max-w-[90vw] md:max-w-[600px] break-words z-40"
+            className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-6 text-white rounded-2xl shadow-2xl bg-gradient-to-r from-gray-900/95 to-slate-900/95 backdrop-blur-xl border border-emerald-500/30 max-w-[90vw] md:max-w-[600px] break-words z-40"
             style={{
               maxHeight: '60vh',
               overflowY: 'auto'
@@ -748,7 +749,7 @@ export default function Home() {
             onTouchEnd={() => handleTouchEnd(index)}
             onClick={() => handleDoubleTap(index)}
           >
-            <div className="latex-content text-lg md:text-xl lg:text-2xl text-center whitespace-normal bg-black/30 rounded-xl p-4 border border-purple-500/20 backdrop-blur-sm">
+            <div className="latex-content text-lg md:text-xl lg:text-2xl text-center whitespace-normal bg-black/30 rounded-xl p-4 border border-emerald-500/20 backdrop-blur-sm">
               {latex}
             </div>
           </div>

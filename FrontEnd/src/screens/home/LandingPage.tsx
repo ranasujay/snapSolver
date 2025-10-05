@@ -2,17 +2,14 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion, useAnimation, useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import {
   ArrowRightIcon,
-  CalculatorIcon,
-  PencilIcon,
-  DocumentChartBarIcon,
   AcademicCapIcon,
   SparklesIcon,
   UserIcon,
   UserPlusIcon,
-  CalculatorIcon as CalcIcon,
+  DocumentChartBarIcon,
 } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import calc from "../../assets/calc.png";
@@ -23,65 +20,11 @@ import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
 import CountUp from 'react-countup'
 
-const people = [
-  {
-    id: 1,
-    name: "John Doe",
-    designation: "Software Engineer",
-    image:
-      "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3387&q=80",
-  },
-  {
-    id: 2,
-    name: "Robert Johnson",
-    designation: "Product Manager",
-    image:
-      "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
-  },
-  {
-    id: 3,
-    name: "Jane Smith",
-    designation: "Data Scientist",
-    image:
-      "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YXZhdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
-  },
-  {
-    id: 4,
-    name: "Emily Davis",
-    designation: "UX Designer",
-    image:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60",
-  },
-  {
-    id: 5,
-    name: "Tyler Durden",
-    designation: "Soap Developer",
-    image:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3540&q=80",
-  },
-  {
-    id: 6,
-    name: "Dora",
-    designation: "The Explorer",
-    image:
-      "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3534&q=80",
-  },
-];
 
 
 
-const MacScreen = ({ children }: { children: React.ReactNode }) => (
-  <div className="bg-gray-800 rounded-2xl p-4 shadow-2xl max-w-6xl mx-auto z-10 sticky top-28">
-    <div className="bg-gray-900 rounded-xl overflow-hidden">
-      <div className="bg-gray-800 p-2 flex items-center space-x-2">
-        <div className="w-3 h-3 rounded-full bg-red-500"></div>
-        <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-        <div className="w-3 h-3 rounded-full bg-green-500"></div>
-      </div>
-      <div className="p-4">{children}</div>
-    </div>
-  </div>
-);
+
+
 
 const FeatureCard = ({
   icon: Icon,
@@ -92,36 +35,16 @@ const FeatureCard = ({
   title: string;
   description: string;
 }) => (
-  <CardSpotlight className=" bg-gray-800 p-6 rounded-xl shadow-lg hover:scale-105 transition-all duration-200">
-    <Icon className="w-12 h-12 text-purple-500 mb-4 z-50" />
-    <h3 className="text-xl font-bold text-white mb-2 z-20">{title}</h3>
-    <p className="text-gray-300 z-20">{description}</p>
-  </CardSpotlight>
-);
-
-const AnimatedText = ({
-  text,
-  className,
-}: {
-  text: string;
-  className: string;
-}) => (
-  <div className={`flex flex-wrap justify-center ${className}`}>
-    {text.split("").map((char: string, index: number) => (
-      <motion.span
-        key={index}
-        className="inline-block"
-        whileHover={{
-          scale: 1.2,
-          rotate: 5,
-          color: "#a855f7",
-          transition: { duration: 0.1 },
-        }}
-      >
-        {char === " " ? "\u00A0" : char}
-      </motion.span>
-    ))}
-  </div>
+  <motion.div
+    whileHover={{ scale: 1.02, y: -5 }}
+    transition={{ duration: 0.3 }}
+    className="group bg-gray-800/80 p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-700 hover:border-emerald-500/50 hover:bg-gray-750 relative overflow-hidden backdrop-blur-sm"
+  >
+    <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+    <Icon className="w-12 h-12 text-emerald-500 mb-4 group-hover:text-teal-400 group-hover:scale-110 transition-all duration-300 relative z-10" />
+    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-emerald-100 transition-colors duration-300 relative z-10">{title}</h3>
+    <p className="text-gray-300 leading-relaxed group-hover:text-gray-200 transition-colors duration-300 relative z-10">{description}</p>
+  </motion.div>
 );
 
 const StatCard = ({
@@ -135,9 +58,9 @@ const StatCard = ({
 }) => (
   <motion.div
     whileHover={{ scale: 1.05 }}
-    className="bg-purple-800 bg-opacity-30 backdrop-blur-sm p-6 rounded-xl shadow-lg border border-purple-400 flex flex-col items-center"
+    className="bg-gray-800/60 bg-opacity-30 backdrop-blur-sm p-6 rounded-xl shadow-lg border border-emerald-400/50 flex flex-col items-center hover:border-emerald-300/70 transition-colors duration-300"
   >
-    <Icon className="w-12 h-12 text-purple-300 mb-4" />
+    <Icon className="w-12 h-12 text-emerald-400 mb-4" />
     <motion.span
       className="text-4xl font-bold text-white mb-2"
       initial={{ opacity: 0, scale: 0.5 }}
@@ -146,7 +69,7 @@ const StatCard = ({
     >
       <CountUp end={value} duration={4} enableScrollSpy scrollSpyOnce/>+
     </motion.span>
-    <span className="text-purple-200">{label}</span>
+    <span className="text-gray-300">{label}</span>
   </motion.div>
 );
 
@@ -158,11 +81,13 @@ const FAQItem = ({
   answer: string;
 }) => (
   <motion.div
-    whileHover={{ scale: 1.02 }}
-    className="bg-gray-700 p-6 rounded-xl shadow-lg transition-all duration-300 ease-in-out hover:bg-gray-600"
+    whileHover={{ scale: 1.02, y: -3 }}
+    transition={{ duration: 0.3 }}
+    className="group bg-gray-700/80 p-6 rounded-xl shadow-lg transition-all duration-300 ease-in-out hover:bg-gray-600 hover:shadow-xl border border-transparent hover:border-emerald-500/30 relative overflow-hidden backdrop-blur-sm"
   >
-    <h3 className="text-xl font-bold text-white mb-2">{question}</h3>
-    <p className="text-gray-300">{answer}</p>
+    <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-emerald-100 transition-colors duration-300 relative z-10">{question}</h3>
+    <p className="text-gray-300 group-hover:text-gray-200 transition-colors duration-300 relative z-10">{answer}</p>
   </motion.div>
 );
 
@@ -221,9 +146,9 @@ export default function LandingPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-indigo-900 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900 text-white">
       {/* Modern Enhanced Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-gray-900/95 via-purple-900/90 to-gray-900/95 backdrop-blur-xl border-b border-purple-500/30 shadow-2xl">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-gray-900/95 via-slate-800/90 to-gray-900/95 backdrop-blur-xl border-b border-emerald-500/30 shadow-2xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             
@@ -236,27 +161,20 @@ export default function LandingPage() {
             >
               <div className="relative group">
                 {/* Main Logo Container */}
-                <div className="w-14 h-14 bg-gradient-to-br from-purple-500 via-pink-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-2xl transform rotate-3 group-hover:rotate-0 transition-all duration-500 hover:scale-110">
-                  {/* Calculator Icon */}
-                  <div className="relative">
-                    <div className="w-8 h-8 bg-white/20 rounded-lg flex flex-col justify-center items-center backdrop-blur-sm">
-                      <div className="grid grid-cols-2 gap-0.5 w-5 h-5">
-                        <div className="w-1.5 h-1.5 bg-white rounded-full opacity-90"></div>
-                        <div className="w-1.5 h-1.5 bg-white rounded-full opacity-70"></div>
-                        <div className="w-1.5 h-1.5 bg-white rounded-full opacity-70"></div>
-                        <div className="w-1.5 h-1.5 bg-white rounded-full opacity-90"></div>
-                      </div>
-                    </div>
-                    {/* Sparkle Effect */}
-                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full animate-pulse shadow-lg"></div>
-                  </div>
+                <div className="w-14 h-14 rounded-2xl flex items-center justify-center shadow-2xl transform rotate-3 group-hover:rotate-0 transition-all duration-500 hover:scale-110">
+                  {/* SVG Logo */}
+                  <img 
+                    src="/logo.svg" 
+                    alt="SnapSolver Logo" 
+                    className="w-full h-full rounded-2xl"
+                  />
                 </div>
                 {/* Glow Effect */}
-                <div className="absolute inset-0 w-14 h-14 bg-gradient-to-br from-purple-400 to-pink-400 rounded-2xl blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 w-14 h-14 bg-gradient-to-br from-emerald-400 to-teal-400 rounded-2xl blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-500"></div>
               </div>
               
               <div className="relative">
-                <h1 className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-purple-300 via-pink-300 to-purple-400 text-transparent bg-clip-text tracking-tight">
+                <h1 className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-emerald-300 via-teal-300 to-cyan-400 text-transparent bg-clip-text tracking-tight">
                   SnapSolver
                 </h1>
               </div>
@@ -274,12 +192,13 @@ export default function LandingPage() {
                   {/* Canvas Button */}
                   <Link to="/canvas">
                     <motion.button
-                      whileHover={{ scale: 1.05, y: -2 }}
+                      whileHover={{ scale: 1.05, y: -2, boxShadow: "0 20px 40px rgba(59, 130, 246, 0.5)" }}
                       whileTap={{ scale: 0.98 }}
-                      className="group bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-6 py-2.5 rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center space-x-2"
+                      className="group bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-cyan-600 text-white px-6 py-2.5 rounded-2xl font-semibold shadow-lg hover:shadow-2xl transition-all duration-300 flex items-center space-x-2 relative overflow-hidden"
                     >
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
                       <span>🎨</span>
-                      <span className="hidden sm:inline">Open Canvas</span>
+                      <span className="hidden sm:inline relative z-10">Open Canvas</span>
                       <span className="sm:hidden">Canvas</span>
                     </motion.button>
                   </Link>
@@ -290,29 +209,29 @@ export default function LandingPage() {
                       whileHover={{ scale: 1.05 }}
                       className="flex items-center space-x-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-2xl px-4 py-2.5 border border-white/20 hover:border-white/30 transition-all duration-300 shadow-lg"
                     >
-                      <div className="w-9 h-9 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+                      <div className="w-9 h-9 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
                         {user?.name?.charAt(0)?.toUpperCase() || 'U'}
                       </div>
                       <div className="hidden md:block text-left">
                         <p className="text-white font-medium text-sm">{user?.name || userName[currentname]}</p>
-                        <p className="text-purple-200/60 text-xs">{user?.email}</p>
+                        <p className="text-emerald-200/60 text-xs">{user?.email}</p>
                       </div>
-                      <svg className="w-4 h-4 text-purple-200 group-hover:text-white transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4 text-emerald-200 group-hover:text-white transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                       </svg>
                     </motion.button>
 
                     {/* Dropdown Menu */}
-                    <div className="absolute right-0 top-full mt-2 w-64 bg-gray-900/95 backdrop-blur-xl border border-purple-500/30 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                    <div className="absolute right-0 top-full mt-2 w-64 bg-gray-900/95 backdrop-blur-xl border border-emerald-500/30 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
                       <div className="p-4">
                         {/* User Info */}
-                        <div className="flex items-center space-x-3 pb-4 border-b border-purple-500/20">
-                          <div className="w-12 h-12 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+                        <div className="flex items-center space-x-3 pb-4 border-b border-emerald-500/20">
+                          <div className="w-12 h-12 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
                             {user?.name?.charAt(0)?.toUpperCase() || 'U'}
                           </div>
                           <div>
                             <p className="text-white font-semibold">{user?.name || userName[currentname]}</p>
-                            <p className="text-purple-200/70 text-sm">{user?.email}</p>
+                            <p className="text-emerald-200/70 text-sm">{user?.email}</p>
                           </div>
                         </div>
 
@@ -320,12 +239,12 @@ export default function LandingPage() {
                         <div className="py-3 space-y-1">
                           <Link to="/canvas" className="flex items-center space-x-3 px-3 py-2 rounded-xl hover:bg-white/10 transition-colors duration-200 group/item">
                             <span className="text-lg">🎨</span>
-                            <span className="text-white group-hover/item:text-purple-300">Open Canvas</span>
+                            <span className="text-white group-hover/item:text-emerald-300">Open Canvas</span>
                           </Link>
                         </div>
 
                         {/* Logout Button */}
-                        <div className="pt-3 border-t border-purple-500/20">
+                        <div className="pt-3 border-t border-emerald-500/20">
                           <motion.button
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
@@ -354,11 +273,12 @@ export default function LandingPage() {
                   
                   <Link to="/register">
                     <motion.button
-                      whileHover={{ scale: 1.05, y: -2 }}
+                      whileHover={{ scale: 1.05, y: -2, boxShadow: "0 20px 40px rgba(168, 85, 247, 0.4)" }}
                       whileTap={{ scale: 0.98 }}
-                      className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-6 py-2.5 rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                      className="group bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white px-6 py-2.5 rounded-2xl font-semibold shadow-lg hover:shadow-2xl transition-all duration-300 relative overflow-hidden"
                     >
-                      Get Started
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+                      <span className="relative z-10">Get Started</span>
                     </motion.button>
                   </Link>
                 </div>
@@ -370,140 +290,144 @@ export default function LandingPage() {
         </div>
 
         {/* Enhanced glow effect */}
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 via-transparent to-pink-600/10 pointer-events-none"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/10 via-transparent to-teal-600/10 pointer-events-none"></div>
       </nav>
 
-      <main className="pt-16 md:pt-24">
-        <section className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden">
-          <FloatingIconSquare
-            icon={CalculatorIcon}
-            initialX={-600}
-            initialY={-100}
-          />
-          <FloatingIconSquare
-            icon={PencilIcon}
-            initialX={500}
-            initialY={-150}
-          />
-          <FloatingIconSquare
-            icon={DocumentChartBarIcon}
-            initialX={-150}
-            initialY={250}
-          />
-
-          <div className="max-w-5xl w-full text-center z-10">
-            <BackgroundLines className="flex items-center justify-center w-full flex-col px-4 bg-transparent pointer-events-none">
-              <motion.h2
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="text-[52px] md:text-8xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600"
-              >
-                Revolutionize Your Calculations
-              </motion.h2>
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="text-xl md:text-2xl text-purple-200 mb-12"
-              >
-                SnapSolver harnesses the power of AI to transform how you
-                approach mathematics.
-              </motion.p>
-            </BackgroundLines>
+      <main className="pt-20">
+        <section className="min-h-screen flex items-center justify-center px-4">
+          <div className="max-w-4xl w-full text-center">
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-emerald-400 via-teal-500 to-cyan-600 bg-clip-text text-transparent"
+            >
+              Revolutionize Your Calculations
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto"
+            >
+              SnapSolver harnesses the power of AI to transform how you approach mathematics. 
+              Draw your equations and get instant solutions.
+            </motion.p>
             <Link to={"/canvas"}>
-              <motion.div
-                className="bg-purple-600 text-white px-8 py-3 rounded-full font-semibold shadow-lg text-lg flex items-center mx-auto w-fit mb-2 z-50"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                onHoverStart={() => setIsHovered(true)}
-                onHoverEnd={() => setIsHovered(false)}
+              <motion.button
+                className="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white px-8 py-4 rounded-2xl font-semibold shadow-lg text-lg flex items-center mx-auto space-x-2"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ duration: 0.2 }}
               >
-                Start Calculating
-                <motion.div
-                  animate={{ x: isHovered ? 5 : 0 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                >
-                  <ArrowRightIcon className="w-5 h-5 ml-2" />
-                </motion.div>
-              </motion.div>
+                <span>Start Calculating</span>
+                <ArrowRightIcon className="w-5 h-5" />
+              </motion.button>
             </Link>
           </div>
         </section>
 
-        <ScrollAnimatedSection>
-          <section className="py-24 px-4">
-            <div className="max-w-6xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="mb-12"
-              >
-                <AnimatedText
-                  text="Unlock the Power of AI-Driven Mathematics"
-                  className="text-4xl md:text-5xl font-bold text-center"
-                />
-              </motion.div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <FeatureCard
-                  icon={SparklesIcon}
-                  title="Intelligent Problem Solving"
-                  description="Our AI analyzes and solves complex mathematical problems, providing step-by-step explanations."
-                />
-                <FeatureCard
-                  icon={DocumentChartBarIcon}
-                  title="Advanced Visualization"
-                  description="Transform abstract concepts into interactive visual representations for deeper understanding."
-                />
-                <FeatureCard
-                  icon={AcademicCapIcon}
-                  title="Personalized Learning"
-                  description="Adaptive learning algorithms tailor problems and explanations to your skill level."
-                />
-              </div>
-            </div>
-          </section>
-        </ScrollAnimatedSection>
-
-        <ScrollAnimatedSection>
-          <section className="py-24 w-full px-2 md:px-0 rounded-md bg-slate-900 relative flex flex-col items-center justify-center antialiased">
-            <div className="max-w-6xl px-3 md:px-0 mx-auto flex flex-col gap-8 relative">
-              <h2 className="text-4xl md:text-5xl font-bold mb-4 text-center z-10">
-                See SnapSolver in Action
+        <section className="py-20 px-4 bg-gray-800/20">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                Unlock the Power of AI-Driven Mathematics
               </h2>
-              <MacScreen>
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.8 }}
-                >
-                  <img
-                    src={showcase2}
-                    alt="SnapSolver Interface"
-                    className="w-full rounded-lg shadow-lg"
-                  />
-                </motion.div>
-              </MacScreen>
-
-              <MacScreen>
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.8 }}
-                >
-                  <img
-                    src={showcase1}
-                    alt="SnapSolver Interface"
-                    className="w-full rounded-lg shadow-lg"
-                  />
-                </motion.div>
-              </MacScreen>
+              <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+                Experience cutting-edge features designed to transform your mathematical journey
+              </p>
             </div>
-            <BackgroundBeams />
-          </section>
-        </ScrollAnimatedSection>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <FeatureCard
+                icon={SparklesIcon}
+                title="Intelligent Problem Solving"
+                description="Our AI analyzes and solves complex mathematical problems, providing step-by-step explanations."
+              />
+              <FeatureCard
+                icon={DocumentChartBarIcon}
+                title="Advanced Visualization"
+                description="Transform abstract concepts into interactive visual representations for deeper understanding."
+              />
+              <FeatureCard
+                icon={AcademicCapIcon}
+                title="Personalized Learning"
+                description="Adaptive learning algorithms tailor problems and explanations to your skill level."
+              />
+            </div>
+          </div>
+        </section>
+
+        <section className="py-20 px-4">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center text-white">
+              See SnapSolver in Action
+            </h2>
+            <div className="space-y-8">
+              {/* Enhanced Showcase Card 1 */}
+              <motion.div 
+                whileHover={{ scale: 1.02, y: -5 }}
+                transition={{ duration: 0.3 }}
+                className="group bg-gray-800/80 rounded-2xl p-4 shadow-2xl hover:shadow-3xl transition-all duration-300 border border-gray-700 hover:border-emerald-500/50 relative overflow-hidden backdrop-blur-sm"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="bg-gray-900 rounded-xl overflow-hidden relative z-10">
+                  <div className="bg-gray-800 p-2 flex items-center space-x-2">
+                    <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                    <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                    <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                    <span className="ml-4 text-sm text-gray-400">SnapSolver Canvas - Advanced Drawing Interface</span>
+                  </div>
+                  <div className="p-4">
+                    <img
+                      src={showcase2}
+                      alt="SnapSolver Drawing Interface - Modern canvas with floating toolbars, color palette, and real-time equation solving"
+                      className="w-full rounded-lg shadow-lg group-hover:shadow-2xl transition-shadow duration-300"
+                    />
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Enhanced Showcase Card 2 */}
+              <motion.div 
+                whileHover={{ scale: 1.02, y: -5 }}
+                transition={{ duration: 0.3 }}
+                className="group bg-gray-800/80 rounded-2xl p-4 shadow-2xl hover:shadow-3xl transition-all duration-300 border border-gray-700 hover:border-emerald-500/50 relative overflow-hidden backdrop-blur-sm"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="bg-gray-900 rounded-xl overflow-hidden relative z-10">
+                  <div className="bg-gray-800 p-2 flex items-center space-x-2">
+                    <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                    <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                    <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                    <span className="ml-4 text-sm text-gray-400">SnapSolver Results - Centered Solution Display</span>
+                  </div>
+                  <div className="p-4">
+                    <img
+                      src={showcase1}
+                      alt="SnapSolver Results Interface - Clean solution display with mathematical equations rendered in center"
+                      className="w-full rounded-lg shadow-lg group-hover:shadow-2xl transition-shadow duration-300"
+                    />
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+            
+            {/* Note for updating images */}
+            <div className="mt-8 p-4 bg-emerald-900/20 border border-emerald-500/30 rounded-xl backdrop-blur-sm">
+              <p className="text-emerald-200 text-sm text-center">
+                💡 <strong>Note:</strong> The showcase images above should be updated to reflect the new clean canvas design with:
+              </p>
+              <ul className="text-emerald-200 text-sm mt-2 grid grid-cols-1 md:grid-cols-2 gap-2 max-w-4xl mx-auto">
+                <li>• Modern floating toolbar with gradient buttons</li>
+                <li>• Clean black canvas background</li>
+                <li>• Centered solution display overlay</li>
+                <li>• Updated color palette (blue/cyan theme)</li>
+                <li>• Responsive navigation header</li>
+                <li>• No drag handles or cluttered elements</li>
+              </ul>
+            </div>
+          </div>
+        </section>
 
         <ScrollAnimatedSection>
           <section className="py-24 px-4">
@@ -512,21 +436,21 @@ export default function LandingPage() {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8 }}
-                className="bg-gradient-to-r from-purple-900 to-indigo-900 rounded-3xl p-12 shadow-2xl"
+                className="bg-gradient-to-r from-gray-800 via-slate-800 to-gray-800 rounded-3xl p-12 shadow-2xl border border-emerald-500/20"
               >
                 <div className="flex flex-col md:flex-row items-center justify-between">
                   <div className="mb-8 md:mb-0 md:mr-8">
                     <h3 className="text-3xl font-bold text-white mb-4">
                       Experience the Future of Calculation
                     </h3>
-                    <p className="text-purple-200 mb-6">
+                    <p className="text-gray-300 mb-6">
                       Join thousands of students and professionals who have
                       transformed their mathematical capabilities with
                       SnapSolver.
                     </p>
                     <Link to={"/canavs"}>
                       <motion.div
-                        className="bg-white text-purple-600 px-8 py-3 rounded-full font-semibold shadow-lg flex items-center w-fit"
+                        className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-8 py-3 rounded-full font-semibold shadow-lg flex items-center w-fit hover:from-emerald-600 hover:to-teal-600"
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                         transition={{
@@ -584,7 +508,7 @@ export default function LandingPage() {
                   label="Registered Users"
                 />
                 <StatCard
-                  icon={CalcIcon}
+                  icon={DocumentChartBarIcon}
                   value={2000}
                   label="Calculations Performed"
                 />
@@ -593,51 +517,92 @@ export default function LandingPage() {
           </section>
         </ScrollAnimatedSection>
 
-        <ScrollAnimatedSection>
-          <section className="py-24 px-4">
-            <div className="max-w-4xl mx-auto text-center">
-              <motion.h2
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="text-4xl md:text-5xl font-bold mb-6"
+        <section className="py-20 px-4">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center text-white">
+              What Our Users Say
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {/* Testimonial 1 */}
+              <motion.div 
+                whileHover={{ scale: 1.02, y: -5 }}
+                transition={{ duration: 0.3 }}
+                className="group bg-gray-800/80 p-6 rounded-2xl shadow-lg border border-gray-700 hover:border-emerald-500/50 hover:shadow-2xl transition-all duration-300 relative overflow-hidden backdrop-blur-sm"
               >
-                What Our Users Say
-              </motion.h2>
-              <div className="flex flex-row items-center justify-center mb-10 w-full">
-                <AnimatedTooltip items={people} />
-              </div>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="bg-gray-800 p-8 rounded-xl shadow-lg"
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="relative z-10">
+                  <p className="text-lg text-gray-300 mb-6 leading-relaxed">
+                    "SnapSolver has completely changed how I approach complex calculations. It's like having a brilliant math tutor available 24/7!"
+                  </p>
+                  <div className="flex items-center space-x-3">
+                    <div className="w-12 h-12 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+                      A
+                    </div>
+                    <div>
+                      <p className="font-semibold text-white">Adarsh Verma</p>
+                      <p className="text-gray-400 text-sm">Engineering Student</p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Testimonial 2 */}
+              <motion.div 
+                whileHover={{ scale: 1.02, y: -5 }}
+                transition={{ duration: 0.3 }}
+                className="group bg-gray-800/80 p-6 rounded-2xl shadow-lg border border-gray-700 hover:border-emerald-500/50 hover:shadow-2xl transition-all duration-300 relative overflow-hidden backdrop-blur-sm"
               >
-                <p className="text-xl text-purple-200 mb-4">
-                  "SnapSolver has completely changed how I approach complex
-                  calculations. It's like having a brilliant math tutor
-                  available 24/7!"
-                </p>
-                <p className="font-semibold text-white">
-                  - Adarsh Verma., Engineering Student
-                </p>
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="relative z-10">
+                  <p className="text-lg text-gray-300 mb-6 leading-relaxed">
+                    "As a research scientist, I need accurate calculations quickly. SnapSolver's AI-powered solutions have boosted my productivity tremendously!"
+                  </p>
+                  <div className="flex items-center space-x-3">
+                    <div className="w-12 h-12 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+                      S
+                    </div>
+                    <div>
+                      <p className="font-semibold text-white">Dr. Sarah Chen</p>
+                      <p className="text-gray-400 text-sm">Research Scientist</p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Testimonial 3 */}
+              <motion.div 
+                whileHover={{ scale: 1.02, y: -5 }}
+                transition={{ duration: 0.3 }}
+                className="group bg-gray-800/80 p-6 rounded-2xl shadow-lg border border-gray-700 hover:border-emerald-500/50 hover:shadow-2xl transition-all duration-300 relative overflow-hidden backdrop-blur-sm md:col-span-2 lg:col-span-1"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="relative z-10">
+                  <p className="text-lg text-gray-300 mb-6 leading-relaxed">
+                    "Teaching mathematics became so much easier with SnapSolver. My students love the interactive approach and visual solutions!"
+                  </p>
+                  <div className="flex items-center space-x-3">
+                    <div className="w-12 h-12 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+                      M
+                    </div>
+                    <div>
+                      <p className="font-semibold text-white">Mike Rodriguez</p>
+                      <p className="text-gray-400 text-sm">High School Math Teacher</p>
+                    </div>
+                  </div>
+                </div>
               </motion.div>
             </div>
-          </section>
-        </ScrollAnimatedSection>
+          </div>
+        </section>
 
         <ScrollAnimatedSection>
-          <section className="py-24 px-4 bg-gray-800 relative w-full overflow-hidden flex flex-col items-center justify-center rounded-t-lg">
-            <div className="absolute inset-0 w-full h-full bg-slate-900 z-20 [mask-image:radial-gradient(transparent,white)] pointer-events-none" />
-
-            <Boxes />
-
+          <section className="py-24 px-4 bg-gray-800 flex flex-col items-center justify-center">
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               className={cn(
-                "md:text-4xl text-xl text-white relative z-20 mb-9"
+                "md:text-4xl text-xl text-white mb-9"
               )}
             >
               Frequently Asked Questions
@@ -659,7 +624,7 @@ export default function LandingPage() {
       <footer className="bg-gray-900 py-12 px-4">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center">
           <div className="mb-8 md:mb-0">
-            <h3 className="text-2xl font-bold text-purple-300 mb-2">
+            <h3 className="text-2xl font-bold text-emerald-300 mb-2">
               SnapSolver
             </h3>
             <p className="text-gray-400">
@@ -693,8 +658,15 @@ export default function LandingPage() {
             </a>
           </nav>
         </div>
-        <div className="mt-8 text-center text-gray-500">
-          <p>made with <span className="animate-pulse">❤️</span> by Sujay Rana</p>
+        <div className="mt-8 flex justify-center">
+          <div className="bg-gradient-to-r from-emerald-600/20 via-teal-600/20 to-emerald-600/20 backdrop-blur-sm border border-emerald-500/30 rounded-2xl px-6 py-3 shadow-lg hover:shadow-emerald-500/20 transition-all duration-300">
+            <p className="text-emerald-200 font-medium">
+              Developed by
+              <span className="font-bold text-transparent bg-gradient-to-r from-emerald-300 to-teal-300 bg-clip-text ml-1">
+                Sujay Rana
+              </span>
+            </p>
+          </div>
         </div>
       </footer>
     </div>

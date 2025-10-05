@@ -1,50 +1,108 @@
-# React + TypeScript + Vite
+# 🎨 SnapSolver Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React TypeScript client for mathematical problem solving with interactive canvas.
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Interactive Canvas**: HTML5 Canvas with drawing tools
+- **Real-time AI Analysis**: Google Gemini AI integration
+- **LaTeX Rendering**: Mathematical notation with MathJax
+- **Modern UI**: Tailwind CSS with emerald theme
+- **Authentication**: JWT-based secure login system
 
-## Expanding the ESLint configuration
+## � Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **React 18** - UI library with hooks
+- **TypeScript** - Type-safe development
+- **Vite** - Fast build tool
+- **Tailwind CSS** - Utility-first styling
+- **Framer Motion** - Smooth animations
 
-- Configure the top-level `parserOptions` property like this:
+## � Installation
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+1. **Install Dependencies**
+   ```bash
+   npm install
+   ```
+
+2. **Start Development**
+   ```bash
+   npm run dev
+   ```
+
+3. **Build for Production**
+   ```bash
+   npm run build
+   ```
+
+## 🏗️ Project Structure
+
+```
+FrontEnd/
+├── src/
+│   ├── components/
+│   │   └── ui/                     # Reusable UI components
+│   │       ├── animated-tooltip.tsx
+│   │       ├── background-beams.tsx
+│   │       ├── background-boxes.tsx
+│   │       ├── background-lines.tsx
+│   │       ├── button.tsx
+│   │       ├── canvas-reveal-effect.tsx
+│   │       ├── card-spotlight.tsx
+│   │       └── sheet.tsx
+│   ├── contexts/
+│   │   └── AuthContext.tsx         # Authentication state management
+│   ├── screens/
+│   │   ├── auth/                   # Authentication pages
+│   │   │   ├── Login.tsx           # User login page
+│   │   │   └── Register.tsx        # User registration page
+│   │   └── home/                   # Main application pages
+│   │       ├── index.tsx           # Interactive canvas interface
+│   │       └── LandingPage.tsx     # Marketing/welcome page
+│   ├── services/
+│   │   └── api.ts                  # API service layer
+│   ├── lib/
+│   │   └── utils.ts                # Utility functions
+│   ├── assets/                     # Static assets
+│   │   ├── calc.png
+│   │   ├── google.svg
+│   │   ├── react.svg
+│   │   ├── showcase1.png
+│   │   └── showcase2.png
+│   ├── App.tsx                     # Main application component
+│   ├── main.tsx                    # Application entry point
+│   ├── constants.ts                # Frontend constants
+│   ├── App.css                     # Global styles
+│   ├── index.css                   # Base styles
+│   └── vite-env.d.ts              # Vite environment types
+├── public/
+│   └── logo.png                    # Application logo
+├── package.json                    # Dependencies and scripts
+├── vite.config.ts                  # Vite build configuration
+├── tailwind.config.js              # Tailwind CSS configuration
+├── tsconfig.json                   # TypeScript configuration
+├── tsconfig.app.json               # App-specific TypeScript config
+├── tsconfig.node.json              # Node-specific TypeScript config
+├── postcss.config.js               # PostCSS configuration
+├── eslint.config.js                # ESLint configuration
+├── components.json                 # shadcn/ui configuration
+└── README.md                       # Frontend documentation
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## 🔧 Available Scripts
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Code quality check
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+##  Contributing
+
+1. Create feature branch
+2. Follow TypeScript guidelines
+3. Add tests for new features
+4. Submit pull request
+
+---
+
+**Built with React & TypeScript**
