@@ -42,13 +42,7 @@ FrontEnd/
 ├── src/
 │   ├── components/
 │   │   └── ui/                     # Reusable UI components
-│   │       ├── animated-tooltip.tsx
-│   │       ├── background-beams.tsx
-│   │       ├── background-boxes.tsx
-│   │       ├── background-lines.tsx
 │   │       ├── button.tsx
-│   │       ├── canvas-reveal-effect.tsx
-│   │       ├── card-spotlight.tsx
 │   │       └── sheet.tsx
 │   ├── contexts/
 │   │   └── AuthContext.tsx         # Authentication state management
@@ -57,7 +51,7 @@ FrontEnd/
 │   │   │   ├── Login.tsx           # User login page
 │   │   │   └── Register.tsx        # User registration page
 │   │   └── home/                   # Main application pages
-│   │       ├── index.tsx           # Interactive canvas interface
+│   │       ├── canvas.tsx           # Interactive canvas interface
 │   │       └── LandingPage.tsx     # Marketing/welcome page
 │   ├── services/
 │   │   └── api.ts                  # API service layer
