@@ -411,21 +411,6 @@ export default function LandingPage() {
                 </div>
               </motion.div>
             </div>
-            
-            {/* Note for updating images */}
-            <div className="mt-8 p-4 bg-emerald-900/20 border border-emerald-500/30 rounded-xl backdrop-blur-sm">
-              <p className="text-emerald-200 text-sm text-center">
-                💡 <strong>Note:</strong> The showcase images above should be updated to reflect the new clean canvas design with:
-              </p>
-              <ul className="text-emerald-200 text-sm mt-2 grid grid-cols-1 md:grid-cols-2 gap-2 max-w-4xl mx-auto">
-                <li>• Modern floating toolbar with gradient buttons</li>
-                <li>• Clean black canvas background</li>
-                <li>• Centered solution display overlay</li>
-                <li>• Updated color palette (blue/cyan theme)</li>
-                <li>• Responsive navigation header</li>
-                <li>• No drag handles or cluttered elements</li>
-              </ul>
-            </div>
           </div>
         </section>
 
