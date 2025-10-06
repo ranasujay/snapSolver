@@ -103,13 +103,7 @@ snapSolver/
 │   ├── src/
 │   │   ├── components/
 │   │   │   └── ui/             # Reusable UI components
-│   │   │       ├── animated-tooltip.tsx
-│   │   │       ├── background-beams.tsx
-│   │   │       ├── background-boxes.tsx
-│   │   │       ├── background-lines.tsx
 │   │   │       ├── button.tsx
-│   │   │       ├── canvas-reveal-effect.tsx
-│   │   │       ├── card-spotlight.tsx
 │   │   │       └── sheet.tsx
 │   │   ├── contexts/
 │   │   │   └── AuthContext.tsx # Authentication state management
@@ -118,7 +112,7 @@ snapSolver/
 │   │   │   │   ├── Login.tsx
 │   │   │   │   └── Register.tsx
 │   │   │   └── home/           # Main application pages
-│   │   │       ├── index.tsx   # Canvas interface
+│   │   │       ├── canvas.tsx   # Canvas interface
 │   │   │       └── LandingPage.tsx # Marketing page
 │   │   ├── services/
 │   │   │   └── api.ts          # API service layer
@@ -154,4 +148,4 @@ snapSolver/
 
 ---
 
-Made with ❤️ by [Sujay Rana](https://github.com/ranasujay)
+Made by [Sujay Rana](https://github.com/ranasujay)
