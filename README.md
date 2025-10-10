@@ -4,7 +4,7 @@ AI-powered mathematical problem solver with interactive canvas for drawing and a
 
 ## Design
 
-![snapSolver Design]()
+![snapSolver Design](https://github.com/ranasujay/snapSolver/blob/master/snapSolver_design.png)
 
 ## ✨ Features
 
