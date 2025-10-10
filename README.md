@@ -2,6 +2,10 @@
 
 AI-powered mathematical problem solver with interactive canvas for drawing and analyzing mathematical expressions.
 
+## Design
+
+![snapSolver Design]()
+
 ## ✨ Features
 
 - **Interactive Canvas**: Draw mathematical expressions with intuitive tools
